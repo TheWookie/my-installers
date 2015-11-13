@@ -16,6 +16,10 @@ def download_file(url, md5_string=None):
         md5_string = md5_string.lower()
         m = hashlib.md5()
     local_filename = url.split('/')[-1]
+    if '?' in local_filename:
+        local_filename = local_filename.split('?')[0]
+    elif '&' in local_filename:
+        local_filename = local_filename.split('&')[0]
     if not m:
         print "".join(["Downloading: ", url, " to: ", local_filename])
     else:
