@@ -49,7 +49,7 @@ if __name__ == "__main__":
     # if (os.getuid() is not 0):
     #     exit("Cannot run script without root permissions. Please run this script as root.")
     eclipse_archive_file = download_eclipse()
-    eclipse_folder_name = os.path.splitext(os.path.splitext(eclipse_archive_file)[0])[0]
+    eclipse_folder_name = setup_core.base_filename(eclipse_archive_file)
     if ".zip" in eclipse_archive_file:
         setup_core.extract_zip(eclipse_archive_file)
     elif ".tar" in eclipse_archive_file:

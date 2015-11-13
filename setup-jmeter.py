@@ -39,7 +39,8 @@ if __name__ == "__main__":
     # Download jmeter .tgz file.
     jmeter_tar_file = download_jmeter()
     setup_core.extract_tar(jmeter_tar_file)
-    extracted_tar_directory = os.path.splitext(jmeter_tar_file)[0]
+    # extracted_tar_directory = os.path.splitext(jmeter_tar_file)[0]
+    extracted_tar_directory = setup_core.base_filename(jmeter_tar_file)
     # Download plugin .zip file
     plugin_zip_file = download_plugin()
     setup_core.extract_zip(plugin_zip_file, extracted_tar_directory)

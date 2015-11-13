@@ -1,6 +1,6 @@
 #!/usr/bin/env python2
 # Python 3 is used by default in Arch linux. Unlikely this will be used, but an extra character doesn't hurt.
-
+import os
 import requests
 import hashlib
 import tarfile, zipfile
@@ -29,7 +29,7 @@ def download_file(url, md5_string=None):
     # user_agent = "".join(
     #     ["Mozilla/5.0 (X11; ", platform.system(), " ", platform.release(), " ", platform.machine(),
     #      ") AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36 OPR/33.0.1990.58"])
-    #, headers={"User-Agent": user_agent}
+    # , headers={"User-Agent": user_agent}
     r = requests.get(url, stream=True)
     with open(local_filename, 'wb') as f:
         for chunk in r.iter_content(chunk_size=1024):
@@ -65,3 +65,12 @@ def extract_zip(zip_file, extract_path='.'):
 # https://docs.python.org/2/library/platform.html#cross-platform
 def is_64bit():
     return sys.maxsize > 2 ** 32
+
+
+def base_filename(filename_with_ext):
+    while True:
+        next = os.path.splitext(filename_with_ext)[0]
+        if next == filename_with_ext:
+            return filename_with_ext
+        else:
+            filename_with_ext = next
