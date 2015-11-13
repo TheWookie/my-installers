@@ -7,6 +7,7 @@ import shutil
 from lxml import html
 import setup_core
 
+
 def download_jmeter():
     jmeter_download_page_url = "http://jmeter.apache.org/download_jmeter.cgi"
     print "Hitting JMeter download page: " + jmeter_download_page_url
