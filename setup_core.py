@@ -5,9 +5,11 @@ import requests
 import hashlib
 import tarfile, zipfile
 
-
 # http://stackoverflow.com/a/16696317/1478636
 # https://docs.python.org/3/library/hashlib.html
+import sys
+
+
 def download_file(url, md5_string=None):
     m = None
     if md5_string is not None:
@@ -42,3 +44,8 @@ def extract_tar(tar_file, extract_path='.'):
 def extract_zip(zip_file, extract_path='.'):
     with zipfile.ZipFile(zip_file, "r") as z:
         z.extractall(extract_path)
+
+
+# https://docs.python.org/2/library/platform.html#cross-platform
+def is_64bit():
+    return sys.maxsize > 2 ** 32
