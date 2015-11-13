@@ -5,7 +5,7 @@ import os
 import requests
 import shutil
 from lxml import html
-
+import setup_core
 
 def download_jmeter():
     jmeter_download_page_url = "http://jmeter.apache.org/download_jmeter.cgi"
@@ -16,7 +16,7 @@ def download_jmeter():
     jmeter_tar_md5_url = filter(lambda x: x.endswith(".tgz.md5") and not "src" in x, jmeter_page_links)[0]
     jmeter_md5_string = requests.get(jmeter_tar_md5_url).text.split(" ")[0]
     print "".join(["Downloading: ", jmeter_tar_file_url, " and will verify with MD5: ", jmeter_md5_string])
-    tar_file = download_file(jmeter_tar_file_url, jmeter_md5_string)
+    tar_file = setup_core.download_file(jmeter_tar_file_url, jmeter_md5_string)
     print tar_file + " was downloaded with correct MD5"
     return tar_file
 
@@ -28,7 +28,7 @@ def download_plugin():
     plugin_download_link = "".join(
         [plugin_download_page_url, plugin_page_tree.xpath('/html/body/div/div/div[1]/a[1]/@href')[0]])
     print "Downloading: " + plugin_download_link
-    zip_file = download_file(plugin_download_link)
+    zip_file = setup_core.download_file(plugin_download_link)
     print zip_file + " was downloaded"
     return zip_file
 
@@ -39,11 +39,11 @@ if __name__ == "__main__":
         exit("Cannot run script without root permissions. Please run this script as root.")
     # Download jmeter .tgz file.
     jmeter_tar_file = download_jmeter()
-    extract_tar(jmeter_tar_file)
+    setup_core.extract_tar(jmeter_tar_file)
     extracted_tar_directory = os.path.splitext(jmeter_tar_file)[0]
     # Download plugin .zip file
     plugin_zip_file = download_plugin()
-    extract_zip(plugin_zip_file, extracted_tar_directory)
+    setup_core.extract_zip(plugin_zip_file, extracted_tar_directory)
     print "".join([plugin_zip_file, " was extracted to ", extracted_tar_directory])
     # Move to /usr/local
     print "Moving to /usr/local/"
