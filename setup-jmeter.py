@@ -16,7 +16,6 @@ def download_jmeter():
     jmeter_tar_file_url = filter(lambda x: x.endswith(".tgz") and not "src" in x, jmeter_page_links)[0]
     jmeter_tar_md5_url = filter(lambda x: x.endswith(".tgz.md5") and not "src" in x, jmeter_page_links)[0]
     jmeter_md5_string = requests.get(jmeter_tar_md5_url).text.split(" ")[0]
-    print "".join(["Downloading: ", jmeter_tar_file_url, " and will verify with MD5: ", jmeter_md5_string])
     tar_file = setup_core.download_file(jmeter_tar_file_url, jmeter_md5_string)
     print tar_file + " was downloaded with correct MD5"
     return tar_file
@@ -28,7 +27,6 @@ def download_plugin():
     plugin_page_tree = html.fromstring(requests.get(plugin_download_page_url).content)
     plugin_download_link = "".join(
         [plugin_download_page_url, plugin_page_tree.xpath('/html/body/div/div/div[1]/a[1]/@href')[0]])
-    print "Downloading: " + plugin_download_link
     zip_file = setup_core.download_file(plugin_download_link)
     print zip_file + " was downloaded"
     return zip_file

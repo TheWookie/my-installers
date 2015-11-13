@@ -16,6 +16,10 @@ def download_file(url, md5_string=None):
         md5_string = md5_string.lower()
         m = hashlib.md5()
     local_filename = url.split('/')[-1]
+    if not m:
+        print "".join(["Downloading: ", url, " to: ", local_filename])
+    else:
+        print "".join(["Downloading: ", url, " to: ", local_filename, " verifying with MD5: ", md5_string])
     r = requests.get(url, stream=True)
     with open(local_filename, 'wb') as f:
         for chunk in r.iter_content(chunk_size=1024):
