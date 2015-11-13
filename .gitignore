@@ -1,3 +1,6 @@
+*.tgz
+*.zip
+
 #Maven
 
 target/
