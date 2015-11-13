@@ -4,6 +4,7 @@
 import requests
 import hashlib
 import tarfile, zipfile
+import platform
 
 # http://stackoverflow.com/a/16696317/1478636
 # https://docs.python.org/3/library/hashlib.html
@@ -24,6 +25,11 @@ def download_file(url, md5_string=None):
         print "".join(["Downloading: ", url, " to: ", local_filename])
     else:
         print "".join(["Downloading: ", url, " to: ", local_filename, " verifying with MD5: ", md5_string])
+
+    # user_agent = "".join(
+    #     ["Mozilla/5.0 (X11; ", platform.system(), " ", platform.release(), " ", platform.machine(),
+    #      ") AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36 OPR/33.0.1990.58"])
+    #, headers={"User-Agent": user_agent}
     r = requests.get(url, stream=True)
     with open(local_filename, 'wb') as f:
         for chunk in r.iter_content(chunk_size=1024):
@@ -41,6 +47,7 @@ def download_file(url, md5_string=None):
 def extract_tar(tar_file, extract_path='.'):
     # with tarfile.TarFile(tar_file, "r") as t:
     #     t.extractall(extract_path)
+    print "Extracting: ", tar_file, " to: ", extract_path
     tar = tarfile.open(tar_file, 'r')
     for item in tar:
         tar.extract(item, extract_path)
@@ -50,6 +57,7 @@ def extract_tar(tar_file, extract_path='.'):
 
 # http://stackoverflow.com/a/9432315/1478636
 def extract_zip(zip_file, extract_path='.'):
+    print "Extracting: ", zip_file, " to: ", extract_path
     with zipfile.ZipFile(zip_file, "r") as z:
         z.extractall(extract_path)
 
